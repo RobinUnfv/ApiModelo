@@ -1,6 +1,7 @@
-package com.robin.demo.taller.service;
+package com.robin.demo.taller.service.programacion.impl;
 
 import com.robin.demo.taller.model.Taller;
+import com.robin.demo.taller.service.programacion.info.ITallerService;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;

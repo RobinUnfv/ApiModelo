@@ -1,18 +1,16 @@
 package com.robin.demo.taller.controller.programacion;
 
 import com.robin.demo.taller.controller.commons.ResponseRest;
-import com.robin.demo.taller.controller.constants.ResponseContants;
 import com.robin.demo.taller.controller.generic.GenericController;
 import com.robin.demo.taller.entity.Arfadoc;
 import com.robin.demo.taller.entity.ArfadocId;
-import com.robin.demo.taller.service.IArfadocService;
+import com.robin.demo.taller.service.exception.ServiceException;
+import com.robin.demo.taller.service.programacion.info.IArfadocService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
@@ -22,11 +20,6 @@ public class ArfadocContro extends GenericController {
 
     @Autowired
     private IArfadocService  arfadocService;
-
-    @GetMapping("/{noCia}")
-    public List<Arfadoc> listaDocumentosNoCia(@RequestParam String noCia) {
-        return arfadocService.listaDocumentosNoCia(noCia);
-    }
 
     @GetMapping
     @RequestMapping("/buscar")
@@ -39,12 +32,21 @@ public class ArfadocContro extends GenericController {
         return super.getOKConsultaRequest(documentos);
     }
 
-    @GetMapping("/{noCia}/{codDoc}")
-    public Arfadoc getArfadoc(@PathVariable String noCia,@PathVariable String codDoc) {
-        ArfadocId id = new ArfadocId();
-        id.setNoCia(noCia);
-        id.setCodDoc(codDoc);
-        return arfadocService.getArfadoc(id);
+    @GetMapping()
+    @RequestMapping("/id")
+    public ResponseEntity<ResponseRest> getArfadoc(@RequestParam String noCia, @RequestParam String codDoc) {
+        try {
+            ArfadocId arfadocId = new ArfadocId();
+            arfadocId.setNoCia(noCia);
+            arfadocId.setCodDoc(codDoc);
+            Arfadoc arfadoc = arfadocService.buscarPorCodigo(arfadocId);
+            if ( arfadoc == null ) {
+                return super.getNotFoundRequest();
+            }
+            return  super.getOKConsultaRequest(arfadoc);
+        } catch (ServiceException e) {
+            return super.getErrorRequest();
+        }
     }
 
     @GetMapping

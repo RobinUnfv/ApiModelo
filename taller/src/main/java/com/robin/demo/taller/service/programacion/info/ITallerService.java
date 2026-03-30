@@ -1,4 +1,4 @@
-package com.robin.demo.taller.service;
+package com.robin.demo.taller.service.programacion.info;
 
 import com.robin.demo.taller.model.Taller;
 
