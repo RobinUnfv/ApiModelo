@@ -8,6 +8,7 @@ import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.sql.rowset.serial.SerialException;
 import java.util.List;
 
 @Service
@@ -48,9 +49,25 @@ public class ArfadocServiceImpl implements IArfadocService {
     }
 
     @Override
+    public List<Arfadoc> getAllArfadoc(String noCia) {
+        return List.of();
+    }
+
+    @Override
+    public Arfadoc crearArfadoc(Arfadoc arfadoc) {
+        return null;
+    }
+
+    @Override
     public List<Arfadoc> buscarDescripDoc(String noCia, String descripcion) {
         descripcion = descripcion == null ? "" : "%" + descripcion.toUpperCase().trim() + "%";
         return arfadocRepo.buscarDescripDoc(noCia, descripcion);
+    }
+
+    /*
+    @Override
+    public Arfadoc getArfadoc(ArfadocId id) {
+        return arfadocRepo.findById(id).orElse(null);
     }
 
     @Override
@@ -62,4 +79,16 @@ public class ArfadocServiceImpl implements IArfadocService {
     public Arfadoc crearArfadoc(Arfadoc arfadoc) {
         return arfadocRepo.save(arfadoc);
     }
+
+    @Override
+    public List<Arfadoc> listaDocumentosNoCia(String noCia) {
+        return arfadocRepo.listaDocumentosNoCia(noCia);
+    }
+
+    @Override
+    public List<Arfadoc> buscarDescripDoc(String noCia, String descripcion) {
+        descripcion = descripcion == null ? "" : "%" + descripcion.toUpperCase().trim() + "%";
+        return arfadocRepo.buscarDescripDoc(noCia, descripcion);
+    }
+    */
 }

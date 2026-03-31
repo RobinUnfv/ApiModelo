@@ -1,13 +1,13 @@
 package com.robin.demo.taller.entity;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.EmbeddedId;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Table;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.Size;
-import lombok.Builder;
 import lombok.Data;
 import org.hibernate.annotations.ColumnDefault;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Data
 @Entity(name = "Arfadoc")
@@ -28,5 +28,9 @@ public class Arfadoc {
     @Size(min = 1, max = 2, message = "El tipo debe tener entre 1 y 2 caracteres")
     @Column(name = "TIPO", length = 2)
     private String tipo;
+
+    @OneToMany(mappedBy = "arfadoc", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JsonIgnore
+    private List<Arfacc> lineas = new ArrayList<>();
 
 }

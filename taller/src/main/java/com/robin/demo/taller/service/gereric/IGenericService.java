@@ -2,6 +2,7 @@ package com.robin.demo.taller.service.gereric;
 
 import com.robin.demo.taller.service.exception.ServiceException;
 
+import javax.sql.rowset.serial.SerialException;
 import java.util.List;
 
 public interface IGenericService<T, G> {
