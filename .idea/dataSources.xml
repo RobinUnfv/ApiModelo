@@ -4,7 +4,7 @@
     <data-source source="LOCAL" name="BDNX1" uuid="6296b46c-4673-411c-8e8e-4512b3a3c16a">
       <driver-ref>oracle.19</driver-ref>
       <synchronize>true</synchronize>
-      <remarks>BD NEXER</remarks>
+      <remarks>NEXER</remarks>
       <auto-commit>false</auto-commit>
       <jdbc-driver>oracle.jdbc.OracleDriver</jdbc-driver>
       <jdbc-url>jdbc:oracle:thin:@localhost:1521:BDNX1</jdbc-url>
