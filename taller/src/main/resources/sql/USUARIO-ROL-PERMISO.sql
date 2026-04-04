@@ -19,20 +19,20 @@ CREATE SEQUENCE seq_permisos
 
 -- 1. TABLA: FACTU.PERMISOS
 CREATE TABLE FACTU.PERMISOS (
-    cod_per NUMBER(10) NOT NULL,
-    nom_per VARCHAR2(50) NOT NULL,
-    descripcion VARCHAR2(200),
-    CONSTRAINT pk_permisos PRIMARY KEY (cod_per),
-    CONSTRAINT uq_permisos_nombre UNIQUE (nom_per)
+                                cod_per NUMBER(10) NOT NULL,
+                                nom_per VARCHAR2(50) NOT NULL,
+                                descripcion VARCHAR2(200),
+                                CONSTRAINT pk_permisos PRIMARY KEY (cod_per),
+                                CONSTRAINT uq_permisos_nombre UNIQUE (nom_per)
 );
 
 -- 2. TABLA: FACTU.ROLES
 CREATE TABLE FACTU.ROLES (
-    cod_rol NUMBER(10) NOT NULL,
-    nom_rol VARCHAR2(50) NOT NULL,
-    descripcion VARCHAR2(200),
-    CONSTRAINT pk_roles PRIMARY KEY (cod_rol),
-    CONSTRAINT uq_roles_nombre_rol UNIQUE (nom_rol)
+                             cod_rol NUMBER(10) NOT NULL,
+                             nom_rol VARCHAR2(50) NOT NULL,
+                             descripcion VARCHAR2(200),
+                             CONSTRAINT pk_roles PRIMARY KEY (cod_rol),
+                             CONSTRAINT uq_roles_nombre_rol UNIQUE (nom_rol)
 );
 
 -- 3.
@@ -76,19 +76,19 @@ COMMENT ON COLUMN FACTU.TAPUSU_PVEN.credencial_no_expirada IS '1=credencial vige
 
 -- 4. TABLA: FACTU.ROLES_PERMISOS (tabla intermedia M:M)
 CREATE TABLE FACTU.ROLES_PERMISOS (
-    cod_rol     NUMBER(10) NOT NULL,
-    cod_per     NUMBER(10) NOT NULL,
-    CONSTRAINT pk_roles_permisos PRIMARY KEY (cod_rol, cod_per),
-    CONSTRAINT fk_rp_rol         FOREIGN KEY (cod_rol) REFERENCES FACTU.ROLES (cod_rol)     ON DELETE CASCADE,
-    CONSTRAINT fk_rp_permiso     FOREIGN KEY (cod_per) REFERENCES FACTU.PERMISOS (cod_per)  ON DELETE CASCADE
+                                      cod_rol     NUMBER(10) NOT NULL,
+                                      cod_per     NUMBER(10) NOT NULL,
+                                      CONSTRAINT pk_roles_permisos PRIMARY KEY (cod_rol, cod_per),
+                                      CONSTRAINT fk_rp_rol         FOREIGN KEY (cod_rol) REFERENCES FACTU.ROLES (cod_rol)     ON DELETE CASCADE,
+                                      CONSTRAINT fk_rp_permiso     FOREIGN KEY (cod_per) REFERENCES FACTU.PERMISOS (cod_per)  ON DELETE CASCADE
 );
 
 -- 5. TABLA: FACTU.USUARIO_ROLES (tabla intermedia M:M)
 CREATE TABLE FACTU.USUARIO_ROLES (
-    no_cia VARCHAR2(2) NOT NULL,
-    usuario VARCHAR2(15) NOT NULL,
-    cod_rol NUMBER(10) NOT NULL,
-    CONSTRAINT pk_usuarios_roles PRIMARY KEY (no_cia,usuario, cod_rol)
+                                     no_cia VARCHAR2(2) NOT NULL,
+                                     usuario VARCHAR2(15) NOT NULL,
+                                     cod_rol NUMBER(10) NOT NULL,
+                                     CONSTRAINT pk_usuarios_roles PRIMARY KEY (no_cia,usuario, cod_rol)
 );
 
 
@@ -125,4 +125,13 @@ INSERT INTO FACTU.PERMISOS VALUES( seq_permisos.nextval, 'DELETE', 'PERMISO PARA
 INSERT INTO FACTU.PERMISOS VALUES( seq_permisos.nextval, 'UPDATE', 'PERMISO PARA ACTUALIZAR' );
 
 INSERT INTO FACTU.ROLES VALUES( seq_roles.nextval, 'ADMIN', 'ADMINISTRADOR' );
-INSERT INTO FACTU.ROLES VALUES( seq_roles.nextval, 'CUSTOMER', 'CLIENTE' );
+INSERT INTO FACTU.ROLES VALUES( seq_roles.nextval, 'CUSTOMER', 'CLIENTE' );-- ROLES_PERMISOS
+
+INSERT INTO FACTU.ROLES_PERMISOS VALUES( 1, 1 );
+INSERT INTO FACTU.ROLES_PERMISOS VALUES( 1, 2 );
+INSERT INTO FACTU.ROLES_PERMISOS VALUES( 1, 3 );
+INSERT INTO FACTU.ROLES_PERMISOS VALUES( 1, 4 );
+INSERT INTO FACTU.ROLES_PERMISOS VALUES( 2, 1 );
+
+INSERT INTO FACTU.USUARIO_ROLES VALUES( '01', 'LLE', 1 );
+INSERT INTO FACTU.USUARIO_ROLES VALUES( '01', 'YPC', 2 );
