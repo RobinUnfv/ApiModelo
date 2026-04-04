@@ -37,6 +37,7 @@ public class SecurityConfig {
                 .authorizeHttpRequests( http -> {
                     // CONFIGURAR LOS ENDPOINTS PUBLICOS
                    http.requestMatchers(HttpMethod.GET, "/api/arfadoc/v1/id").permitAll();
+                   http.requestMatchers(HttpMethod.GET, "/api/usuario/id").permitAll();
 
                    // CONFIGURAR LOS ENDPOINTS PROTEGIDOS O PRIVADOS
                    http.requestMatchers(HttpMethod.GET, "/api/arfadoc/v1/buscar").hasAuthority("CREATE");
