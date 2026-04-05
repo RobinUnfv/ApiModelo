@@ -14,7 +14,7 @@ import java.util.Set;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "TAPUSU_PVEN")
+@Table(name = "TAPUSU_PVEN", schema = "FACTU")
 public class TapusuPvenEntity {
     @EmbeddedId
     private TapusuPvenIdEntity tapusuPvenId;
@@ -59,6 +59,7 @@ public class TapusuPvenEntity {
 
     @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinTable( name = "USUARIO_ROLES",
+            schema = "FACTU",
             joinColumns = {
                     @JoinColumn(name = "NO_CIA", referencedColumnName = "NO_CIA"),
                     @JoinColumn(name = "USUARIO", referencedColumnName = "USUARIO")

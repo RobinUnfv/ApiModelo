@@ -2,6 +2,7 @@ package com.robin.demo.taller.controller.programacion;
 
 import com.robin.demo.taller.controller.commons.ResponseRest;
 import com.robin.demo.taller.controller.generic.GenericController;
+import com.robin.demo.taller.dto.UsuarioDto;
 import com.robin.demo.taller.entity.TapusuPvenEntity;
 import com.robin.demo.taller.entity.TapusuPvenIdEntity;
 import com.robin.demo.taller.service.exception.ServiceException;
@@ -25,16 +26,15 @@ public class TapusuPvenContro extends GenericController {
     @RequestMapping("/id")
     public ResponseEntity<ResponseRest> getUsuario(@RequestParam String noCia, @RequestParam String usuario) {
         try{
-            TapusuPvenIdEntity tapusuPvenIdEntity = new TapusuPvenIdEntity();
-            tapusuPvenIdEntity.setUsuario(usuario);
-            tapusuPvenIdEntity.setNoCia(noCia);
-            TapusuPvenEntity tapusuPvenEntity = tapusuPvenServi.buscarPorCodigo(tapusuPvenIdEntity);
-            if ( tapusuPvenEntity == null ) {
+            UsuarioDto usuarioDto = tapusuPvenServi.getID(noCia, usuario);
+            if ( usuarioDto == null ) {
                 return super.getNotFoundRequest();
             }
-            return super.getOKConsultaRequest(tapusuPvenEntity);
+            return super.getOKConsultaRequest(usuarioDto);
         }catch (ServiceException ex) {
             return super.getErrorRequest();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
         }
     }
 

@@ -12,7 +12,7 @@ import java.util.Set;
 @Getter
 @Setter
 @Entity
-@Table(name = "ROLES")
+@Table(name = "ROLES", schema = "FACTU")
 public class RoleEntity {
 
     @Id
@@ -32,6 +32,7 @@ public class RoleEntity {
 
     @ManyToMany(fetch = FetchType.LAZY , cascade = CascadeType.ALL)
     @JoinTable( name = "ROLES_PERMISOS",
+            schema = "FACTU",
         joinColumns = @JoinColumn(name = "COD_ROL"),
         inverseJoinColumns = @JoinColumn(name = "COD_PER"))
     private Set<PermisoEntity> permisos = new HashSet<PermisoEntity>();
