@@ -15,6 +15,7 @@ public class UsuarioMapper {
         UsuarioDto dto = new UsuarioDto();
         dto.setNoCia(entity.getTapusuPvenId().getNoCia());
         dto.setUsuario(entity.getTapusuPvenId().getUsuario());
+        dto.setClave(entity.getClave());
         dto.setNombre(entity.getNombre());
         dto.setTipusua(entity.getTipusua());
         dto.setCentro(entity.getCentro());

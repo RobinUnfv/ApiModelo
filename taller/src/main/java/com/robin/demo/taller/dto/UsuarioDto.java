@@ -8,6 +8,7 @@ import java.util.Set;
 public class UsuarioDto {
     private String noCia;
     private String usuario;
+    private String clave;
     private String nombre;
     private String tipusua;
     private String centro;

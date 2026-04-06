@@ -1,5 +1,6 @@
 package com.robin.demo.taller.config;
 
+import com.robin.demo.taller.service.programacion.impl.UserDetailServiImpl;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -40,11 +41,12 @@ public class SecurityConfig {
                    http.requestMatchers(HttpMethod.GET, "/api/usuario/id").permitAll();
 
                    // CONFIGURAR LOS ENDPOINTS PROTEGIDOS O PRIVADOS
-                   http.requestMatchers(HttpMethod.GET, "/api/arfadoc/v1/buscar").hasAuthority("CREATE");
+                   http.requestMatchers(HttpMethod.GET, "/api/arfafe/pagin-campo").hasAuthority("READ");
+                   http.requestMatchers(HttpMethod.GET, "/api/arfadoc/v1/buscar").hasAuthority("READ");
 
                    // CONFIGURAR EL RESTO DE ENDPOINTS - NO ESPECIFICADOS
                    //http.anyRequest().denyAll(); // RECHAZAR A TODOS
-                    http.anyRequest().authenticated(); // DEBE DE ESTA AUTENTICADO
+                   http.anyRequest().authenticated(); // DEBE DE ESTA AUTENTICADO
                 })
                 .build();
     }
@@ -55,30 +57,12 @@ public class SecurityConfig {
     }
 
     @Bean
-    public AuthenticationProvider authenticationProvider() throws Exception {
-        DaoAuthenticationProvider daoAuthenticationProvider = new DaoAuthenticationProvider(userDetailsService());
+    public AuthenticationProvider authenticationProvider(UserDetailServiImpl userDetailServi ) throws Exception {
+        DaoAuthenticationProvider daoAuthenticationProvider = new DaoAuthenticationProvider(userDetailServi);
         daoAuthenticationProvider.setPasswordEncoder(passwordEncoder());
         return daoAuthenticationProvider;
     }
 
-    @Bean
-    public UserDetailsService userDetailsService() throws Exception {
-        List<UserDetails> users = new ArrayList<>();
-        users.add(User.withUsername("ROBIN")
-                .password("1234")
-                .roles("ADMIN")
-                .authorities("READ", "CREATE")
-                .build()
-        );
-
-        users.add(User.withUsername("GENESIS")
-                .password("448366")
-                .roles("USER")
-                .authorities("READ")
-                .build()
-        );
-       return new InMemoryUserDetailsManager(users);
-    }
 
     @Bean
     public PasswordEncoder passwordEncoder() {
