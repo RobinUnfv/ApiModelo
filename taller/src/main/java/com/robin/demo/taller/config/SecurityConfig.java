@@ -16,6 +16,7 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
@@ -38,15 +39,17 @@ public class SecurityConfig {
                 .authorizeHttpRequests( http -> {
                     // CONFIGURAR LOS ENDPOINTS PUBLICOS
                    http.requestMatchers(HttpMethod.GET, "/api/arfadoc/v1/id").permitAll();
-                   http.requestMatchers(HttpMethod.GET, "/api/usuario/id").permitAll();
+                   //http.requestMatchers(HttpMethod.GET, "/api/usuario/id").permitAll();
 
                    // CONFIGURAR LOS ENDPOINTS PROTEGIDOS O PRIVADOS
-                   http.requestMatchers(HttpMethod.GET, "/api/arfafe/pagin-campo").hasAuthority("READ");
-                   http.requestMatchers(HttpMethod.GET, "/api/arfadoc/v1/buscar").hasAuthority("READ");
+                   http.requestMatchers(HttpMethod.GET, "/api/usuario/id").hasAnyRole("ADMIN");
+                   //http.requestMatchers(HttpMethod.GET, "/api/usuario/id").hasAnyAuthority("CREATE");
+                   http.requestMatchers(HttpMethod.GET, "/api/arfafe/pagin-campo").hasAnyAuthority ("READ");
+                   http.requestMatchers(HttpMethod.GET, "/api/arfadoc/v1/buscar").hasAnyAuthority("READ");
 
                    // CONFIGURAR EL RESTO DE ENDPOINTS - NO ESPECIFICADOS
-                   //http.anyRequest().denyAll(); // RECHAZAR A TODOS
-                   http.anyRequest().authenticated(); // DEBE DE ESTA AUTENTICADO
+                   http.anyRequest().denyAll(); // RECHAZAR A TODOS
+                   //http.anyRequest().authenticated(); // DEBE DE ESTA AUTENTICADO
                 })
                 .build();
     }
@@ -66,8 +69,9 @@ public class SecurityConfig {
 
     @Bean
     public PasswordEncoder passwordEncoder() {
-        return NoOpPasswordEncoder.getInstance();
+        return new BCryptPasswordEncoder();
     }
+
 
 
 }
